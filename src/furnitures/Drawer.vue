@@ -49,11 +49,40 @@
         <q-checkbox v-model="loginForm.rememberMe" keep-color color="primary" label="Remember me"/>
       </div>
       <div class="q-gutter-x-md">
-        <span>New to Muselink? </span><span class="text-primary"> Sign up</span>
+        <span>New to Muselink? </span><span class="text-primary" style="cursor: pointer" @click="signUpDialog = true"> Sign up</span>
       </div>
       <div class="q-gutter-x-md">
         <span>Can't Sign In? </span><span class="text-primary"> Find Id/Password</span>
       </div>
+
+      <q-dialog v-model="signUpDialog" persistent>
+        <q-card style="background-color: #000000; color: white; width: 500px; max-width: 80vw;">
+          <q-card-section class="row items-center q-pb-none">
+            <q-space />
+            <q-btn icon="close" flat round dense v-close-popup />
+          </q-card-section>
+          <div class="text-center" style="font-size: 40px">Sign Up</div>
+          <q-card-section class="text-center q-pa-xl q-gutter-y-lg">
+            <ml-input v-model="loginForm.email" label="USER NAME"/>
+            <ml-input v-model="loginForm.email" label="EMAIL"/>
+            <ml-input v-model="loginForm.password" label="PASSWORD"/>
+            <div>
+              <q-btn color="primary" class="full-width" rounded size="lg">
+                Sign Up
+              </q-btn>
+            </div>
+            <div class="q-py-sm">
+              <q-separator dark inset />
+            </div>
+            <div>
+              <q-btn color="white" text-color="black" class="full-width" rounded size="lg">
+                <q-icon name="img:icons/google-icon.svg" class="q-mr-md"/>
+                Sign Up With Google
+              </q-btn>
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
     </div>
   </div>
 </template>
@@ -73,8 +102,16 @@ export default {
         password: '',
         rememberMe: false
       },
-      isLogin: false
+      isLogin: false,
+      signUpDialog: false
     }
   }
 }
 </script>
+
+<style>
+  .q-dialog__backdrop {
+    background-color: #000000aa !important;
+    backdrop-filter: blur(10px);
+  }
+</style>
