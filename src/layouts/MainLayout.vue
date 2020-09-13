@@ -78,133 +78,7 @@
       show-if-above
       bordered class="overflow-hidden"
     >
-      <div class="column" style="padding-left: 40px;">
-        <template id="isLogin">
-          <div v-if="isLogin" class="text-center">
-            <round-image :diameter="120" url="bgs/index.jpg" style="margin-top: 50px;"/>
-            <div style="font-size: 20px;">Jooyong Kim
-              <q-icon name="settings" style="opacity: 0.2"/>
-            </div>
-            <div class="row justify-center q-mt-sm" style="font-size: 10px;">
-              <div class="text-ml-yellow">팔로워</div>
-              <div>&emsp;17&emsp;</div>
-              <div class="text-ml-yellow">팔로잉</div>
-              <div>&emsp;42&emsp;</div>
-              <div class="text-ml-yellow">프로젝트</div>
-              <div>&emsp;3</div>
-            </div>
-            <q-btn unelevated rounded color="black" label="Go to my channel" text-color="ml-yellow" class="q-mt-md"
-                   style="font-size: 10px;"/>
-            <div class="column" style="margin-top: 40px;">
-              <div class="text-ml-yellow text-subtitle2 text-left q-mt-lg">나의 프로젝트</div>
-              <div style="max-width: 350px">
-                <hr style="border-color: darkgray; margin: 1px;">
-                <div style="height: 100px; max-height: 200px;">
-                  <q-scroll-area class="fit" style="max-width: 300px;">
-                    <q-list dark>
-                      <div v-for="n in 10" :key="n">
-                        <q-item clickable v-ripple style="padding:0px;">
-                          <q-item-section avatar>
-                            <q-avatar square>
-                              <img src="bgs/index.jpg">
-                            </q-avatar>
-                          </q-item-section>
-                          <q-item-section class="text-left">
-                            <q-item-label>Avatar-type icon</q-item-label>
-                            <q-item-label caption style="font-size: 6px; color: darkgray">sdsfs fdfda dadadf ebuie bfh iji
-                              osjoaj dsi
-                            </q-item-label>
-                          </q-item-section>
-                          <q-item-section side>
-                            <q-icon name="reorder" size="30px"></q-icon>
-                          </q-item-section>
-                        </q-item>
-                      </div>
-                      <hr style="border-color: darkgray; margin: 1px;">
-                    </q-list>
-                  </q-scroll-area>
-                </div>
-              </div>
-              <div class="text-ml-yellow text-subtitle2 text-left q-mt-lg">참여한 프로젝트</div>
-              <div style="max-width: 350px">
-                <q-list dark>
-                  <hr style="border-color: darkgray; margin: 1px;">
-                  <q-item clickable v-ripple style="padding:0px;">
-                    <q-item-section avatar>
-                      <q-avatar color="teal" text-color="white" icon="bluetooth"/>
-                    </q-item-section>
-                    <q-item-section class="text-left">
-                      <q-item-label>Avatar-type icon</q-item-label>
-                      <q-item-label caption style="font-size: 6px; color: darkgray">sdsfs fdfda dadadf ebuie bfh iji
-                        osjoaj dsi
-                      </q-item-label>
-                    </q-item-section>
-                    <q-item-section side>
-                      <q-icon name="reorder" size="30px"></q-icon>
-                    </q-item-section>
-                  </q-item>
-                  <hr style="border-color: darkgray; margin: 1px;">
-                  <q-item clickable v-ripple style="padding:0px;">
-                    <q-item-section avatar>
-                    </q-item-section>
-                    <q-item-section class="text-left">
-                      <q-item-label>Avatar-type icon</q-item-label>
-                      <q-item-label caption style="font-size: 6px; color: darkgray">sdsfs fdfda dadadf ebuie bfh iji
-                        osjoaj dsi
-                      </q-item-label>
-                    </q-item-section>
-                    <q-item-section side>
-                      <q-icon name="reorder" size="30px"></q-icon>
-                    </q-item-section>
-                  </q-item>
-                  <hr style="border-color: darkgray; margin: 1px;">
-                </q-list>
-              </div>
-              <div class="text-ml-yellow text-subtitle2 text-left q-mt-lg">나의 재생목록</div>
-              <div style="max-width: 350px">
-                <q-list dark>
-                  <hr style="border-color: darkgray; margin: 1px;">
-                  <q-item clickable v-ripple style="padding:0px;">
-                    <q-item-section avatar>
-                      <q-avatar square>
-                        <img src="bgs/index.jpg">
-                      </q-avatar>
-                    </q-item-section>
-                    <q-item-section class="text-left">
-                      <q-item-label>Avatar-type icon</q-item-label>
-                      <q-item-label caption style="font-size: 6px; color: darkgray">sdsfs fdfda dadadf ebuie bfh iji
-                        osjoaj dsi
-                      </q-item-label>
-                    </q-item-section>
-                    <q-item-section side>
-                      <q-icon name="reorder" size="30px"></q-icon>
-                    </q-item-section>
-                  </q-item>
-                  <hr style="border-color: darkgray; margin: 1px;">
-                  <q-item clickable v-ripple style="padding:0px;">
-                    <q-item-section avatar>
-                      <q-avatar color="teal" text-color="white" icon="bluetooth"/>
-                    </q-item-section>
-                    <q-item-section class="text-left">
-                      <q-item-label>Avatar-type icon</q-item-label>
-                      <q-item-label caption style="font-size: 6px; color: darkgray">sdsfs fdfda dadadf ebuie bfh iji
-                        osjoaj dsi
-                      </q-item-label>
-                    </q-item-section>
-                    <q-item-section side>
-                      <q-icon name="reorder" size="30px"></q-icon>
-                    </q-item-section>
-                  </q-item>
-                  <hr style="border-color: darkgray; margin: 1px;">
-                </q-list>
-              </div>
-            </div>
-          </div>
-          <div v-else>
-            <div style="font-size: 20px;" @click="isLogin = ! isLogin">Sign In</div>
-          </div>
-        </template>
-      </div>
+      <drawer />
     </q-drawer>
     <q-page-container>
       <q-page class="flex flex-center q-mr-md" style="margin-left: 70px; color: #dfdfdf">
@@ -217,15 +91,14 @@
 </template>
 
 <script>
-import RoundImage from 'components/RoundImage'
+import Drawer from 'src/furnitures/Drawer'
 
 export default {
   name: 'MainLayout',
-  components: { RoundImage },
+  components: { Drawer },
   data () {
     return {
-      leftDrawerOpen: false,
-      isLogin: false
+      leftDrawerOpen: false
     }
   }
 }
@@ -254,10 +127,6 @@ export default {
     overflow: hidden;
   }
 
-  .bg-grey-1 {
-    background-color: #00000000 !important;
-  }
-
   .fade-right-enter-active, .fade-right-leave-active {
     transition: all 2.0s ease;
   }
@@ -265,13 +134,5 @@ export default {
   .fade-right-enter, .fade-right-leave-to {
     transform: translateX(-40px);
     opacity: 0;
-  }
-
-  .text-ml-yellow {
-    color: #ffcc57;
-  }
-
-  .text-ml-white {
-    color: #dfdfdf;
   }
 </style>
