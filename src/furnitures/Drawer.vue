@@ -32,7 +32,7 @@
       <ml-input v-model="loginForm.email" label="EMAIL" dense/>
       <ml-input v-model="loginForm.password" label="PASSWORD" dense/>
       <div>
-        <q-btn color="primary" class="full-width" rounded>
+        <q-btn color="primary" class="full-width" rounded @click="isLogin = !isLogin">
           Sign In
         </q-btn>
       </div>
