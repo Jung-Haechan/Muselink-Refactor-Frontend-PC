@@ -17,13 +17,13 @@
              style="font-size: 10px;"/>
       <div class="q-pt-lg">
         <small-list
-          label="나의 프로젝트"
+          label="나의 프로젝트" list-class="my-project"
         />
         <small-list
-          label="참여한 프로젝트"
+          label="참여한 프로젝트" list-class="participated-project"
         />
         <small-list
-          label="나의 재생목록"
+          label="나의 재생목록" list-class="my-playlist"
         />
       </div>
     </div>
