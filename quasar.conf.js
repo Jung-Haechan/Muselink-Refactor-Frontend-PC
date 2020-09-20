@@ -19,7 +19,7 @@ module.exports = function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
-
+      'vue-social-auth',
       'i18n',
       'axios'
     ],
@@ -45,8 +45,10 @@ module.exports = function (/* ctx */) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
-
+      vueRouterMode: 'history', // available values: 'hash', 'history'
+      env: {
+        googleClientId: '930186888821-upcdj1fs4b9au7ltnatg4l8kkfj11k96.apps.googleusercontent.com'
+      },
       // transpile: false,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
@@ -78,7 +80,13 @@ module.exports = function (/* ctx */) {
     devServer: {
       https: false,
       port: 8080,
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8000',
+          changeOrigin: true,
+        }
+      }
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
@@ -104,7 +112,9 @@ module.exports = function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'LocalStorage'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

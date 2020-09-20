@@ -75,11 +75,12 @@
               <q-separator dark inset />
             </div>
             <div>
-              <q-btn color="white" text-color="black" class="full-width" rounded size="lg">
+              <q-btn color="white" text-color="black" class="full-width" rounded size="lg" @click="AuthProvider('google')">
                 <q-icon name="img:icons/google-icon.svg" class="q-mr-md"/>
                 Sign Up With Google
               </q-btn>
             </div>
+            <q-btn @click="check" color="primary"></q-btn>
           </q-card-section>
         </q-card>
       </q-dialog>
@@ -102,8 +103,28 @@ export default {
         password: '',
         rememberMe: false
       },
+      registerForm: {
+        name: '',
+        email: '',
+        password: ''
+      },
       isLogin: false,
       signUpDialog: false
+    }
+  },
+  methods: {
+    AuthProvider (provider) {
+      this.$auth.authenticate(provider).then(response => {
+        this.$store.dispatch('auth/socialLogin', { provider, response })
+        this.signUpDialog = false
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    check () {
+      this.$axios('/api/login/check').then(res => {
+        console.log(res)
+      })
     }
   }
 }
@@ -111,7 +132,6 @@ export default {
 
 <style>
   .q-dialog__backdrop {
-    background-color: #000000aa !important;
     backdrop-filter: blur(10px);
   }
 </style>

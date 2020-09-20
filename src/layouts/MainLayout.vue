@@ -96,6 +96,18 @@ import Drawer from 'src/furnitures/Drawer'
 export default {
   name: 'MainLayout',
   components: { Drawer },
+  mounted () {
+    if (this.$route.query.token) {
+      this.$axios.get('/api/login/check', {
+        params: {
+          token: this.$route.query.token
+        }
+      })
+        .then((res) => {
+          console.log(res)
+        })
+    }
+  },
   data () {
     return {
       leftDrawerOpen: false
