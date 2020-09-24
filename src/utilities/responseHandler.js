@@ -1,4 +1,4 @@
-import { Notify } from 'quasar';
+import { Notify } from 'quasar'
 
 export default {
   notifyResponse: (res) => {
@@ -7,25 +7,25 @@ export default {
         Notify.create({
           color: 'positive',
           message: '처리 완료되었습니다.',
-          position: 'top',
-        });
-        break;
+          position: 'top'
+        })
+        break
       case 201:
         Notify.create({
           color: 'positive',
           message: '처리 완료되었습니다.',
-          position: 'top',
-        });
-        break;
+          position: 'top'
+        })
+        break
       case 207:
         Notify.create({
           color: 'warning',
           message: res.data.message,
-          position: 'top',
-        });
-        break;
+          position: 'top'
+        })
+        break
       default:
-        break;
+        break
     }
   },
 
@@ -33,8 +33,8 @@ export default {
     Notify.create({
       color: 'negative',
       message: err.response.data.message,
-      position: 'top',
-    });
-    console.log(err.response.data.errors);
-  },
-};
+      position: 'top'
+    })
+    console.log(err.response.data.errors)
+  }
+}

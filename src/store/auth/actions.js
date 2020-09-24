@@ -1,32 +1,47 @@
 import axios from 'axios'
 import { LocalStorage } from 'quasar'
 
+function handleLoginResponse (context, response) {
+  const token = response.data.token
+  const user = response.data.user
+
+  LocalStorage.set('token', token)
+  LocalStorage.set('user', user)
+
+  context.commit('login', user)
+  return Promise.resolve(user)
+}
+
+function handleLoginError (err) {
+  console.log(err)
+  const result = {
+    handled: true,
+    message: 'Login failed'
+  }
+  return Promise.reject(result)
+}
+
 export function socialLogin (context, payload) {
-  axios.post(`/api/login/${payload.provider}`, payload.response).then(response => {
-    const token = response.data.token
-    const user = response.data.user
+  return axios.post(`/api/login/${payload.provider}`, payload.res).then(res => handleLoginResponse(context, res)).catch(handleLoginError)
+}
 
-    LocalStorage.set('token', token)
-    LocalStorage.set('user', user)
+export function login (context, form) {
+  return axios.post('/api/login', form).then(res => handleLoginResponse(context, res)).catch(handleLoginError)
+}
 
-    context.commit('login', { token, user })
-    return Promise.resolve({ token, user })
-  }).catch(err => {
-    console.log(err)
-    const result = {
+export function register (context, form) {
+  return axios.post('/api/register', form).then(res => handleLoginResponse(context, res)).catch(handleLoginError)
+}
+
+export function logout (context) {
+  return axios.post('/api/logout')
+    .then(() => {
+      LocalStorage.remove('user')
+      context.commit('logout')
+      return Promise.resolve()
+    })
+    .catch(() => Promise.reject({
       handled: true,
-      message: 'Login failed: '
-    }
-    // switch (err.response.status) {
-    //   case 422:
-    //     result.message += err.response.data.message
-    //     result.errors = err.response.data.errors
-    //     break
-    //   case 500:
-    //   default:
-    //     result.message += 'Server error'
-    //     break
-    // }
-    return Promise.reject(result)
-  })
+      message: 'Logout failed'
+    }))
 }

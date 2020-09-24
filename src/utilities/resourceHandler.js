@@ -1,15 +1,14 @@
-import Axios from 'axios';
-import { date } from 'quasar';
-import responseHandler from './responseHandler';
+import Axios from 'axios'
+import responseHandler from './responseHandler'
 
-function request(data) {
-  const url = `${data.resourceUri}${(data.resourceId ? `/${data.resourceId}` : '')}${(data.action ? `:${data.action}` : '')}${(data.isBatch ? ':batch' : '')}`;
-  let requestData = null;
+function request (data) {
+  const url = `${data.resourceUri}${(data.resourceId ? `/${data.resourceId}` : '')}${(data.action ? `:${data.action}` : '')}${(data.isBatch ? ':batch' : '')}`
+  let requestData = null
   if (data.requestData) {
     if (Array.isArray(data.requestData)) {
-      requestData = { data: data.requestData };
+      requestData = { data: data.requestData }
     } else {
-      requestData = data.requestData;
+      requestData = data.requestData
     }
   }
   return Axios({
@@ -17,16 +16,16 @@ function request(data) {
     method: data.method,
     data: requestData,
     params: data.requestParams ? data.requestParams : null,
-    responseType: data.responseType,
+    responseType: data.responseType
   })
     .then(data.handleResponse)
     .catch(data.handleError)
-    .finally(data.finalAction);
+    .finally(data.finalAction)
 }
 
-function getResourceByUri(uri) {
-  const uriArray = uri.split('/');
-  return uriArray[uriArray.length - 1];
+function getResourceByUri (uri) {
+  const uriArray = uri.split('/')
+  return uriArray[uriArray.length - 1]
 }
 
 export default {
@@ -38,9 +37,9 @@ export default {
       requestData,
       handleResponse: responseHandler.notifyResponse,
       handleError: responseHandler.notifyError,
-      finalAction,
-    };
-    return request(data);
+      finalAction
+    }
+    return request(data)
   },
 
   index: (resourceUri, requestParams, handleResponse, finalAction) => {
@@ -50,9 +49,9 @@ export default {
       requestParams,
       handleResponse,
       handleError: responseHandler.notifyError,
-      finalAction,
-    };
-    return request(data);
+      finalAction
+    }
+    return request(data)
   },
 
   show: (resourceUri, resourceId, handleResponse) => {
@@ -61,9 +60,9 @@ export default {
       method: 'get',
       resourceId,
       handleResponse,
-      handleError: responseHandler.notifyError,
-    };
-    return request(data);
+      handleError: responseHandler.notifyError
+    }
+    return request(data)
   },
 
   update: (resourceUri, resourceId, requestData, finalAction) => {
@@ -75,9 +74,9 @@ export default {
       requestData,
       handleResponse: responseHandler.notifyResponse,
       handleError: responseHandler.notifyError,
-      finalAction,
-    };
-    return request(data);
+      finalAction
+    }
+    return request(data)
   },
 
   delete: (resourceUri, resourceId, requestData, finalAction) => {
@@ -89,9 +88,9 @@ export default {
       requestData,
       handleResponse: responseHandler.notifyResponse,
       handleError: responseHandler.notifyError,
-      finalAction,
-    };
-    return request(data);
+      finalAction
+    }
+    return request(data)
   },
 
   patchAction: (resourceUri, action, requestData, handleResponse, finalAction) => {
@@ -103,35 +102,10 @@ export default {
       requestData,
       handleResponse,
       handleError: responseHandler.notifyError,
-      finalAction,
-    };
-    return request(data);
+      finalAction
+    }
+    return request(data)
   },
 
-  export: (resourceUri, requestParams, finalAction) => {
-    const data = {
-      resourceUri,
-      method: 'get',
-      isBatch: false,
-      action: 'export',
-      requestParams,
-      responseType: 'blob',
-      handleResponse: (res) => {
-        const resource = getResourceByUri(resourceUri);
-        const dateTime = date.formatDate(Date.now(), 'YYMMDDHHmmss');
-
-        const blob = new Blob([res.data]);
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.setAttribute('download', `${dateTime}${resource}.xlsx`);
-        document.body.appendChild(link);
-        link.click();
-      },
-      handleError: responseHandler.notifyError,
-      finalAction,
-    };
-    return request(data);
-  },
-
-  getResourceByUri,
-};
+  getResourceByUri
+}

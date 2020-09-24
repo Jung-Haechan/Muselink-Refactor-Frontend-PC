@@ -1,10 +1,9 @@
 <template>
   <q-input
     outlined dark
-    rounded :dense="dense"
-    color="primary"
-    :label="label"
+    rounded
     v-model="model"
+    v-bind="$attrs"
     @input="$emit('input', model)"
   />
 </template>
@@ -13,9 +12,7 @@
 export default {
   name: 'MlInput',
   props: {
-    value: String,
-    dense: Boolean,
-    label: String
+    value: String
   },
   data () {
     return {
