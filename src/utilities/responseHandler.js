@@ -32,9 +32,8 @@ export default {
   notifyError: (err) => {
     Notify.create({
       color: 'negative',
-      message: err.response.data.message,
+      message: err.message,
       position: 'top'
     })
-    console.log(err.response.data.errors)
   }
 }

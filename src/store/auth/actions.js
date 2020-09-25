@@ -37,6 +37,7 @@ export function logout (context) {
   return axios.post('/api/logout')
     .then(() => {
       LocalStorage.remove('user')
+      LocalStorage.remove('token')
       context.commit('logout')
       return Promise.resolve()
     })

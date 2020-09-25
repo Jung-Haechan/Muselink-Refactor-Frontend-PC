@@ -1,7 +1,7 @@
 <template>
   <div style="padding-left: 40px;">
     <div v-if="user" class="text-center">
-      <round-image :diameter="120" :url="user.profile_image_file ? user.profile_image_file.path : 'null'" style="margin-top: 50px;"/>
+      <round-image :diameter="120" :url="user.profile_image_file ? user.profile_image_file.path : 'defaults/avatar.png'" style="margin-top: 50px;"/>
       <div style="font-size: 20px;">{{ user.name }}
         <q-icon name="settings" style="opacity: 0.2"/>
       </div>
@@ -17,7 +17,7 @@
         <q-btn unelevated rounded color="black" label="Go to my channel" text-color="ml-yellow" class="q-mt-md"
                style="font-size: 10px;"/>
         <q-btn unelevated rounded color="primary" label="Log Out" text-color="ml-yellow" class="q-mt-md"
-               style="font-size: 10px;" @click="logout" />
+               style="font-size: 10px;" @click="logout" :loading="loading" />
       </div>
       <div class="q-pt-lg">
         <small-list
@@ -36,7 +36,7 @@
       <ml-input v-model="loginForm.email" label="EMAIL" dense/>
       <ml-input v-model="loginForm.password" label="PASSWORD" dense type="password"/>
       <div>
-        <q-btn color="primary" class="full-width" rounded @click="login">
+        <q-btn color="primary" class="full-width" rounded @click="authenticate('login', loginForm)" :loading="loading">
           Sign In
         </q-btn>
       </div>
@@ -44,7 +44,7 @@
         <q-separator dark inset />
       </div>
       <div>
-        <q-btn color="white" text-color="black" class="full-width" rounded>
+        <q-btn color="white" text-color="black" class="full-width" rounded :loading="loading">
           <q-icon name="img:icons/google-icon.svg" class="q-mr-md"/>
           Sign In With Google
         </q-btn>
@@ -67,7 +67,7 @@
           </q-card-section>
           <div class="text-center" style="font-size: 40px">Sign Up</div>
           <q-card-section class="text-center q-pa-xl">
-            <q-form @submit="register" class="q-gutter-y-lg">
+            <q-form @submit="authenticate('register', registerForm)" class="q-gutter-y-lg">
               <ml-input v-model="registerForm.name" label="USER NAME" lazy-rules
                         :rules="[ val => val && val.length > 0 || 'This feild is required' ]" />
               <ml-input v-model="registerForm.email" label="EMAIL" lazy-rules
@@ -75,7 +75,7 @@
               <ml-input v-model="registerForm.password" label="PASSWORD" type="password" lazy-rules
                         :rules="[ val => val && val.length > 8 || 'Password should be longer than 8 characters' ]" />
               <div>
-                <q-btn color="primary" type="submit" class="full-width" rounded size="lg">
+                <q-btn color="primary" type="submit" class="full-width" rounded size="lg" :loading="loading">
                   Sign Up
                 </q-btn>
               </div>
@@ -83,13 +83,12 @@
                 <q-separator dark inset />
               </div>
               <div>
-                <q-btn color="white" text-color="black" class="full-width" rounded size="lg" @click="initSocialLogin('google')">
+                <q-btn color="white" text-color="black" class="full-width" rounded size="lg" @click="initSocialLogin('google')" :loading="loading">
                   <q-icon name="img:icons/google-icon.svg" class="q-mr-md"/>
                   Sign Up With Google
                 </q-btn>
               </div>
             </q-form>
-            <q-btn color="primary"></q-btn>
           </q-card-section>
         </q-card>
       </q-dialog>
@@ -102,6 +101,7 @@ import RoundImage from 'components/RoundImage'
 import SmallList from 'components/SmallList'
 import MlInput from 'components/MlInput'
 import resourceMixins from '../mixins/resource'
+import responseHandler from '../utilities/responseHandler'
 
 export default {
   name: 'Drawer',
@@ -129,6 +129,8 @@ export default {
         contributing_projects: []
       },
 
+      loading: false,
+
       user: this.noneUser
     }
   },
@@ -137,35 +139,32 @@ export default {
   },
   methods: {
     initSocialLogin (provider) {
+      this.loading = true
       this.$auth.authenticate(provider).then(res => {
-        this.$store.dispatch('auth/socialLogin', { provider, res })
-          .then(() => {
-            this.signUpDialog = false
-            this.user = this.$store.state.auth.user
-          })
-      }).catch(err => {
-        console.log(err)
+        this.authenticate('socialLogin', { provider, res })
       })
     },
     logout () {
+      this.loading = true
       this.$store.dispatch('auth/logout')
         .then(() => {
           this.$router.go()
           this.user = this.noneUser
         })
-    },
-    register () {
-      this.$store.dispatch('auth/register', this.registerForm)
-        .then(() => {
-          this.signUpDialog = false
-          this.user = this.$store.state.auth.user
+        .catch(responseHandler.notifyError)
+        .finally(() => {
+          this.loading = false
         })
     },
-    login () {
-      this.$store.dispatch('auth/login', this.loginForm)
+    authenticate (type, form) {
+      this.loading = true
+      this.$store.dispatch(`auth/${type}`, form)
         .then(() => {
           this.signUpDialog = false
           this.user = this.$store.state.auth.user
+        }).catch(responseHandler.notifyError)
+        .finally(() => {
+          this.loading = false
         })
     }
   }
